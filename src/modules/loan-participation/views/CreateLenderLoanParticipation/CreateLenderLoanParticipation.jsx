@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   ComboBox,
+  FileUploader,
 } from "@carbon/react";
 
 import loanParticipationService from "../../loan-participation.service";
@@ -27,6 +28,7 @@ const CreateLenderLoanParticipation = () => {
   const [lender, setLender] = useState(undefined);
   const [loan, setLoan] = useState(undefined);
   const [loans, setLoans] = useState([]);
+  const [file, setFile] = useState(undefined);
 
   const [createLoanParticipationLoading, setCreateLoanParticipationLoading] =
     useState(false);
@@ -80,7 +82,6 @@ const CreateLenderLoanParticipation = () => {
 
   const handleLoanUidChange = ({ selectedItem }) => {
     setLoanUid(selectedItem?.uid);
-
     setLoan(selectedItem);
   };
 
@@ -110,15 +111,16 @@ const CreateLenderLoanParticipation = () => {
         lenderUid: uid,
         loanUid,
         amount: parsedAmount,
+        file,
       });
 
       setCreateLoanParticipationMessage(message);
 
       // clean the values of the form
       document.getElementById("text-input-amount").value = "";
-      document.getElementById("text-input-loan-uid").value = "";
       setAmount(undefined);
       setLoanUid(undefined);
+      setFile(undefined);
     } catch (error) {
       setCreateLoanParticipationError(getMessageFromAxiosError(error));
     }
@@ -156,6 +158,23 @@ const CreateLenderLoanParticipation = () => {
                 autoComplete="off"
               />
               <p>{formatCurrency(amount, "COP")}</p>
+            </div>
+            <div style={{ marginBottom: "1rem" }}>
+              <FileUploader
+                labelTitle="Proof file"
+                labelDescription="Max file size is 15mb. Only [.jpg, .png] files are supported."
+                buttonLabel="Add file"
+                buttonKind="primary"
+                size="sm"
+                filenameStatus="edit"
+                accept={[".jpg", ".png"]}
+                iconDescription="Delete file"
+                name="file"
+                multiple={false}
+                disabled={false}
+                onChange={(event) => setFile(event.target.files[0])}
+                onDelete={() => setFile(undefined)}
+              />
             </div>
             <div style={{ marginBottom: "1rem" }}>
               <ComboBox

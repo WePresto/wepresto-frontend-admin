@@ -40,8 +40,14 @@ class LoanParticipationService {
     };
   }
 
-  async create({ lenderUid, loanUid, amount }) {
+  async create({ lenderUid, loanUid, amount, file }) {
     const token = await getIdTokenFromCurrentUser();
+
+    const formData = new FormData();
+    formData.append("lenderUid", lenderUid);
+    formData.append("loanUid", loanUid);
+    formData.append("amount", amount);
+    if (file) formData.append("file", file);
 
     const { data } = await axios({
       url: `${environment.API_URL}loan-participations`,
@@ -49,11 +55,7 @@ class LoanParticipationService {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: {
-        lenderUid,
-        loanUid,
-        amount,
-      },
+      data: formData,
     });
 
     return {
