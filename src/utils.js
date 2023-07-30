@@ -140,21 +140,6 @@ export const capitalizeFirstLetter = (value = "") => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
-export const buildWhatsappLinkForCoordinationPaymentMessage = ({
-  amount,
-  loanUid,
-}) => {
-  const phoneNumber = environment.CRISTIANDI_PHONE_NUMBER;
-  const message =
-    `Hola, deseo pagar ${formatCurrency(
-      amount
-    )} para el préstamo: ${loanUid}. ` + "Como podemos coordinar?";
-
-  return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
-    message
-  )}`;
-};
-
 // function to format currency
 export const formatCurrency = (value = 0) => {
   return new Intl.NumberFormat("es-CO", {
