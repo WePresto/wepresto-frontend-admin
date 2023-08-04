@@ -8,6 +8,8 @@ import {
   DatePickerInput,
   Button,
   FileUploader,
+  RadioButtonGroup,
+  RadioButton,
 } from "@carbon/react";
 
 import environment from "../../../../environment";
@@ -24,6 +26,7 @@ import { GlobalContext } from "../../../../App.jsx";
 const CreatePayment = () => {
   const [amount, setAmount] = useState(undefined);
   const [invalidAmount, setInvalidAmount] = useState(false);
+  const [type, setType] = useState(undefined);
   const [paymentDate, setPaymentDate] = useState(undefined);
   const [file, setFile] = useState(undefined);
 
@@ -52,6 +55,10 @@ const CreatePayment = () => {
     } else {
       setPaymentDate(undefined);
     }
+  };
+
+  const handleRadioOnChange = (value) => {
+    setType(value);
   };
 
   const handleCreatePaymentSubmit = async (event) => {
@@ -85,6 +92,7 @@ const CreatePayment = () => {
         loanUid: uid,
         amount: parsedAmount,
         paymentDate,
+        type,
         file,
       });
 
@@ -108,7 +116,7 @@ const CreatePayment = () => {
       <div className="cds--row">
         <BackButton />
         <div className="cds--offset-lg-5 cds--col-lg-6 cds--col-md-8 cds--col-sm-4">
-          <h3 className="screen__heading">Payment Creation</h3>
+          <h3 className="screen__heading">Payment Report</h3>
           <Form onSubmit={handleCreatePaymentSubmit}>
             <div style={{ marginBottom: "1rem" }}>
               <TextInput
@@ -138,6 +146,24 @@ const CreatePayment = () => {
               </DatePicker>
             </div>
             <div style={{ marginBottom: "1rem" }}>
+              <RadioButtonGroup
+                legendText="Payment type"
+                name="radio-button-group"
+                onChange={handleRadioOnChange}
+              >
+                <RadioButton
+                  id="radio-2"
+                  labelText="Installments amount reduction"
+                  value={environment.PAYMENT_INSTALLMENT_AMOUNT_REDUCTION_MOVEMENT_TYPE}
+                />
+                <RadioButton
+                  id="radio-3"
+                  labelText="Installments number reduction"
+                  value={environment.PAYMENT_TERM_REDUCTION_MOVEMENT_TYPE}
+                />
+              </RadioButtonGroup>
+            </div>
+            <div style={{ marginBottom: "1rem" }}>
               <FileUploader
                 labelTitle="Proof file"
                 labelDescription="Max file size is 15mb. Only [.jpg, .png] files are supported."
@@ -161,7 +187,7 @@ const CreatePayment = () => {
               >
                 <InlineNotification
                   kind="error"
-                  subtitle={<span>{createPaymentError}</span>}
+                  subtitle={createPaymentError}
                   title="Uups!"
                   onClose={() => setCreatePaymentError(undefined)}
                 />

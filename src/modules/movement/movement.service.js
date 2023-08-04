@@ -46,13 +46,14 @@ class MovementService {
     };
   }
 
-  async createPayment({ loanUid, amount, paymentDate, file }) {
+  async createPayment({ loanUid, amount, paymentDate, type, file }) {
     const token = await getIdTokenFromCurrentUser();
 
     const formData = new FormData();
     formData.append("loanUid", loanUid);
     formData.append("amount", amount);
     formData.append("paymentDate", paymentDate);
+    if (type) formData.append("type", type);
     if (file) formData.append("file", file);
 
     const { data } = await axios({
