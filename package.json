@@ -18,7 +18,7 @@
     "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
   },
   "dependencies": {
-    "@carbon/icons-react": "11.23.1",
+    "@carbon/icons-react": "11.25.0",
     "@carbon/react": "1.34.1",
     "axios": "1.4.0",
     "core-js": "3.32.0",
