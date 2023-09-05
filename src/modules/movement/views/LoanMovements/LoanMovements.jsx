@@ -51,6 +51,10 @@ const headers = [
     header: "Principal",
   },
   {
+    key: "balance",
+    header: "Balance",
+  },
+  {
     key: "paid",
     header: "Paid",
   },
@@ -65,10 +69,6 @@ const headers = [
   {
     key: "createdAt",
     header: "Created At",
-  },
-  {
-    key: "updatedAt",
-    header: "Updated At",
   },
 ];
 
@@ -122,6 +122,7 @@ const LoanMovements = () => {
         amount: formatCurrency(row.amount),
         interest: row.interest ? formatCurrency(row.interest) : "-",
         principal: row.principal ? formatCurrency(row.principal) : "-",
+        balance: row.balance ? formatCurrency(row.balance) : "-",
         dueDate: row.dueDate ? formatDate(new Date(row.dueDate), "UTC") : "-",
         movementDate: row.movementDate
           ? formatDate(new Date(row.movementDate), "UTC")
