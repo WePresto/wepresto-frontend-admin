@@ -28,7 +28,7 @@
     "react-router-dom": "6.21.3",
     "react-scripts": "5.0.1",
     "recharts": "2.11.0",
-    "sass": "1.69.5",
+    "sass": "1.80.4",
     "web-vitals": "3.5.2",
     "workbox-background-sync": "7.0.0",
     "workbox-broadcast-update": "7.0.0",
